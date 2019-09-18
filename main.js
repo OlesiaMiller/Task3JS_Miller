@@ -27,35 +27,48 @@ var shop = [
     {ratingRevievs: '7 отзывов',price:    {oldUan: '10 999 грн', newUan: '9 999 грн'}, name: 'HTC One X10 Dual    Sim Silver'}, {ratingRevievs: '18 отзывов',price: {oldUan: '5 999 грн',    newUan: '4 999 грн'}, name: 'Sony Xperia L1 Dual Black'}
 ];
 
-let div = document.createElement('div');
-div.className = "alert";
-div.innerHTML = "<strong>Всем привет!</strong> Вы прочитали важное сообщение.";var list = document.querySelector('.output ul');
+var ol1 = document.getElementById('ol1');
+var ol2 = document.getElementById('ol2');
+var ol3 = document.getElementById('ol3');
+var pr = document.getElementById('price');
+var rev = document.getElementById('reviev');
 
 
-ol.before('before'); // вставить строку "before" перед <ol>
-ol.after('after'); // вставить строку "after" после <ol>
 
-let liFirst = document.createElement('li');
-liFirst.innerHTML = 'prepend';
-ol.prepend(liFirst); // вставить liFirst в начало <ol>
 
-let liLast = document.createElement('li');
-liLast.innerHTML = 'append';
-ol.append(liLast); // вставить liLast в конец <ol>
 
-// var totalBox = document.querySelector('.output p');
-// var total = 0;
-// list.innerHTML = '';
-// totalBox.textContent = '';
 
-// for(var i = 0; i < shop.length; i++) {
 
-//     itemText = shop[i];
-   
-//     var listItem = document.createElement('li');
-//     listItem.textContent = itemText;
-//     list.appendChild(listItem);
-//    }    
+
+
+function writeArr (arr) {
+    for (var n = 0; n < arr.length; n++) {
+        let liLast = document.createElement('li');
+        liLast.innerHTML = arr[n].name;
+        ol1.append(liLast); // вставить liLast в конец <ol>
+    }
+
+    for (var n = 0; n < arr.length; n++) {
+        let liLast = document.createElement('li');
+        liLast.innerHTML = arr[n].ratingRevievs;
+        ol2.append(liLast); // вставить liLast в конец <ol>
+    }
+
+    for (var n = 0; n < arr.length; n++) {
+        let liLast = document.createElement('li');
+        if (typeof arr[n].price['newUan'] == "string") {
+            liLast.innerHTML = arr[n].price.oldUan + ' ' + arr[n].price.newUan;
+            ol3.append(liLast); // вставить liLast в конец <ol>
+            } else {
+                liLast.innerHTML = arr[n].price;
+                ol3.append(liLast); // вставить liLast в конец <ol>
+                }
+    }
+
+};
+
+
+writeArr(shop); 
 
 var reg = /\D+/g;
 function bubbleSort(arr) {
@@ -71,8 +84,12 @@ function bubbleSort(arr) {
         }
         if (!wasSwap) break;
     }
-    return arr;
-}
+    // return arr;
+    writeArr(arr);
+};
+
+
+
 
 
 
@@ -104,13 +121,34 @@ function priceCompare(arr) {
     
         if (!wasSwap) break;
     }
-    return arr;
+    writeArr(arr);
+
 }
 
-// console.log(priceCompare(shop));
+
+
+
+
+rev.onclick = function() {
+    document.getElementById('ol1').innerHTML = "";
+    document.getElementById('ol2').innerHTML = "";
+    document.getElementById('ol3').innerHTML = "";
+    bubbleSort(shop);
+    
+
+}
+
+pr.onclick = function() {
+    document.getElementById('ol1').innerHTML = "";
+    document.getElementById('ol2').innerHTML = "";
+    document.getElementById('ol3').innerHTML = "";
+    priceCompare(shop);
+}
 
 
 
 
 
-              // }
+
+
+           
