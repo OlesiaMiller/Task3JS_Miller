@@ -8,5 +8,24 @@
 }
 
 .col {
-    width: 33.3%;
+    width: 25%;
+}
+
+.col1 {
+    width: 50%;
+}
+
+.header {
+    display: flex;
+    margin-left: 50px;
+    margin-top: 40px;
+}
+
+.h {
+    width: 50%;
+}
+
+.h1 {
+    width: 25%;
+    padding-left: 20px;
 }

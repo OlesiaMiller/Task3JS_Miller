@@ -33,15 +33,8 @@ var ol3 = document.getElementById('ol3');
 var pr = document.getElementById('price');
 var rev = document.getElementById('reviev');
 
-
-
-
-
-
-
-
-
 function writeArr (arr) {
+
     for (var n = 0; n < arr.length; n++) {
         let liLast = document.createElement('li');
         liLast.innerHTML = arr[n].name;
@@ -58,6 +51,8 @@ function writeArr (arr) {
         let liLast = document.createElement('li');
         if (typeof arr[n].price['newUan'] == "string") {
             liLast.innerHTML = arr[n].price.oldUan + ' ' + arr[n].price.newUan;
+
+            liLast.innerHTML = arr[n].price.newUan + ' / ' + arr[n].price.oldUan;
             ol3.append(liLast); // вставить liLast в конец <ol>
             } else {
                 liLast.innerHTML = arr[n].price;
@@ -71,6 +66,7 @@ function writeArr (arr) {
 writeArr(shop); 
 
 var reg = /\D+/g;
+
 function bubbleSort(arr) {
     for (var i = 0, endI = arr.length - 1; i < endI; i++) {
         var wasSwap = false;
@@ -88,36 +84,48 @@ function bubbleSort(arr) {
     writeArr(arr);
 };
 
-
-
-
-
-
-
-
 function priceCompare(arr) {
     for (var i = 0, endI = arr.length - 1; i < endI; i++) {
         var wasSwap = false;
         for (var j = 0, endJ = endI - i; j < endJ; j++) {
 
-            if (typeof arr[j].price['newUan'] == "string") {
-                arr[j].price = arr[j].price.newUan;
-
-            };  
-
-            if (typeof arr[j + 1].price['newUan'] == "string") {
-                arr[j + 1].price = arr[j + 1].price.newUan;
-
-            };  
+            if ((typeof arr[j].price['newUan'] == "string") && (typeof arr[j + 1].price['newUan'] == "string")) {
+                if (+arr[j].price.newUan.replace(reg, '') > +arr[j + 1].price.newUan.replace(reg, '')) {
+                    var swap = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = swap;
+                    wasSwap = true;
+                }
+            }
             
+            if ((typeof arr[j].price['newUan'] == "string") && (typeof arr[j + 1].price['newUan'] !== "string")) {
+                if (+arr[j].price.newUan.replace(reg, '') > +arr[j + 1].price.replace(reg, '')) {
+                    var swap = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = swap;
+                    wasSwap = true;
+                }
+            }
 
-            if (+arr[j].price.replace(reg, '') > +arr[j + 1].price.replace(reg, '')) {
-                var swap = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = swap;
-                wasSwap = true;
+            if ((typeof arr[j].price['newUan'] !== "string") && (typeof arr[j + 1].price['newUan'] == "string")) {
+                if (+arr[j].price.replace(reg, '') > +arr[j + 1].price.newUan.replace(reg, '')) {
+                    var swap = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = swap;
+                    wasSwap = true;
+                }
+            
+            }
+        
+            if ((typeof arr[j].price['newUan'] !== "string") && (typeof arr[j + 1].price['newUan'] !== "string")) {
+                if (+arr[j].price.replace(reg, '') > +arr[j + 1].price.replace(reg, '')) {
+                    var swap = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = swap;
+                    wasSwap = true;
             }
             };
+        }
     
         if (!wasSwap) break;
     }
@@ -125,17 +133,11 @@ function priceCompare(arr) {
 
 }
 
-
-
-
-
 rev.onclick = function() {
     document.getElementById('ol1').innerHTML = "";
     document.getElementById('ol2').innerHTML = "";
     document.getElementById('ol3').innerHTML = "";
     bubbleSort(shop);
-    
-
 }
 
 pr.onclick = function() {
